@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/iv_header"
+        android:layout_width="fill_parent"
+        android:layout_height="180dip"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chipu" />
+
+    <View
+        android:id="@+id/fake_view"
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:layout_below="@+id/iv_header" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fake_view"
+        android:background="@drawable/gradient_blur_bg"
+        android:gravity="center"
+        android:lines="1"
+        android:padding="10dip"
+        android:text="The month time line title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_cell"
+        android:textStyle="bold" />
+
+</RelativeLayout>

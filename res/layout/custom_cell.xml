@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_cell"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dip"
+    android:background="@drawable/cell_bg"
+    android:gravity="center" >
+
+    <model.NormalSquareImageView
+        android:padding="1dip"
+        android:id="@+id/iv_thumbnail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher"
+        app:flipDrawable="@drawable/chipu"
+        app:flipDuration="1000"
+        app:flipRotations="y|x"
+        app:reverseRotation="false" />
+
+    <com.roomorama.caldroid.SquareTextView
+        android:id="@+id/tv_date"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/gradient_blur_bg"
+        android:text="18"
+		android:gravity="bottom|center_horizontal"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_cell"
+        android:textStyle="bold" />
+
+</RelativeLayout>

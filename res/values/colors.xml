@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="text_bg_opacity">#A6999999</color>
+    <!-- http://stackoverflow.com/questions/11285961/how-to-make-a-background-transparent-20-in-android-->
+    <color name="cell_gray">#E6E6E6</color>
+    <color name="cell_gray_dark">#C2C2AE</color>
+    <color name="cell_green">#9DD0B3</color>
+    <color name="cell_blue">#57B0BC</color>
+    <color name="cell_violet">#AE7DA4</color>
+    <color name="cell_orange">#FFC881</color>
+    <color name="title_bar_bg">#222222</color>
+    
+</resources>
