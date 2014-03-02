@@ -31,7 +31,11 @@ public class TimelineActivity extends FragmentActivity {
 	 */
 	ViewPager mViewPager;
 	private ArrayList<String> list_dates;
-
+	@Override
+	protected void onDestroy() {
+		myApp.cur_date = null;
+		super.onDestroy();
+	}
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);

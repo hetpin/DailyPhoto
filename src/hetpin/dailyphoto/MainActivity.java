@@ -137,6 +137,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				Toast.makeText(getApplicationContext(),
 						"Long click " + formatter.format(date),
 						Toast.LENGTH_SHORT).show();
+				myApp.cur_date = date;
 				add_photo();
 			}
 
@@ -216,15 +217,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				switch (item) {
 				case 0:
 					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					// file_temp = new File(Environment
-					// .getExternalStorageDirectory(), "tmp_file_"
-					// + String.valueOf(System.currentTimeMillis())
-					// + ".jpg");
-					// mImageCaptureUri = Uri.fromFile(file_temp);
-					// intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
-					// mImageCaptureUri);
-					// try {
-					// intent.putExtra("return-data", true);
+					 file_temp = new File(Environment
+					 .getExternalStorageDirectory(), "tmp_file_"
+					 + String.valueOf(System.currentTimeMillis())
+					 + ".jpg");
+					 mImageCaptureUri = Uri.fromFile(file_temp);
+					 intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					 mImageCaptureUri);
+					 intent.putExtra("return-data", true);
 					// startActivityForResult(intent, PICK_FROM_CAMERA);
 					// } catch (ActivityNotFoundException e) {
 					// e.printStackTrace();
@@ -255,9 +255,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		Intent intent = new Intent(MainActivity.this, PlusActivity.class);
 		switch (requestCode) {
 		case PICK_FROM_CAMERA:
+			Log.e("PICK_FROM_CAMERA", "0");
 			Bundle extra = data.getExtras();
+			Log.e("PICK_FROM_CAMERA", "1");
 			myApp.cropped_bitmap = (Bitmap) extra.get("data");
+			Log.e("PICK_FROM_CAMERA", "2");
 			Log.e("camera", "w = " + myApp.cropped_bitmap.getHeight() + " w= "+myApp.cropped_bitmap.getWidth());
+//			if (file_temp != null) {
+//				file_temp.delete();
+//			}
 			startActivityForResult(intent, PLUS_ACTIVITY);
 			break;
 		case PICK_FROM_FILE:

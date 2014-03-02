@@ -50,23 +50,29 @@ public class PlusActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Remove title bar
+		// Remove title bar
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_plus);
 		setTitle("Add photo");
 		myApp = (MyApp) getApplication();
 		if (myApp.cropped_bitmap == null) {
-			Intent intent=new Intent();  
-            setResult(RESULT_CANCELED,intent);  
+			Intent intent = new Intent();
+			setResult(RESULT_CANCELED, intent);
 			finish();
 		}
 		dbHelper = new DBHelper(getApplicationContext());
 		imageLoader = myApp.getImageLoader();
-		Calendar cal = Calendar.getInstance();
 
 		tv_date_time = (EditText) findViewById(R.id.tv_date_time);
-		date_db = dfDateDB.format(cal.getTime());
-		tv_date_time.setText(dfDate.format(cal.getTime()));
+		if (myApp.cur_date != null) {
+			date_db = dfDateDB.format(myApp.cur_date);
+			tv_date_time.setText(dfDate.format(myApp.cur_date));
+		} else {
+			Calendar cal = Calendar.getInstance();
+			date_db = dfDateDB.format(cal.getTime());
+			tv_date_time.setText(dfDate.format(cal.getTime()));
+		}
+
 		iv_image = (ImageView) findViewById(R.id.iv_image);
 		tv_title = (EditText) findViewById(R.id.tv_title);
 		tv_location = (EditText) findViewById(R.id.tv_location);
@@ -80,6 +86,16 @@ public class PlusActivity extends Activity implements OnClickListener {
 		switch (id) {
 		case DATE_PICKER_ID:
 			Calendar cal = Calendar.getInstance();
+			int day, month, year;
+			if (myApp.cur_date != null) {
+				day = myApp.cur_date.getDay();
+				month = myApp.cur_date.getMonth();
+				year = myApp.cur_date.getYear();
+			} else{
+				year = cal.get(Calendar.YEAR);
+				month = cal.get(Calendar.MONTH);
+				day = cal.get(Calendar.DAY_OF_MONTH);
+			}
 			return new DatePickerDialog(PlusActivity.this,
 					new OnDateSetListener() {
 
@@ -93,8 +109,7 @@ public class PlusActivity extends Activity implements OnClickListener {
 							tv_date_time.setText(dfDate.format(date.getTime()));
 							date_db = dfDateDB.format(date.getTime());
 						}
-					}, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal
-							.get(Calendar.DAY_OF_MONTH));
+					}, year, month, day);
 		}
 		return null;
 	}
@@ -111,8 +126,8 @@ public class PlusActivity extends Activity implements OnClickListener {
 		case R.id.action_save:
 			// Save
 			if (myApp.cropped_bitmap == null) {
-				Intent intent=new Intent();  
-	            setResult(RESULT_CANCELED,intent);  
+				Intent intent = new Intent();
+				setResult(RESULT_CANCELED, intent);
 				finish();
 			}
 			try {
@@ -130,15 +145,15 @@ public class PlusActivity extends Activity implements OnClickListener {
 				Log.e("save file ", "failed");
 				e.printStackTrace();
 			}
-			Intent intent=new Intent();  
-            setResult(RESULT_OK,intent);  
+			Intent intent = new Intent();
+			setResult(RESULT_OK, intent);
 			finish();
 			return true;
 		case R.id.action_cancel:
 			// Cancel
 			myApp.cropped_bitmap.recycle();
-			Intent intent2=new Intent();  
-            setResult(RESULT_CANCELED,intent2);  
+			Intent intent2 = new Intent();
+			setResult(RESULT_CANCELED, intent2);
 			finish();
 			return true;
 		default:
@@ -156,8 +171,8 @@ public class PlusActivity extends Activity implements OnClickListener {
 		case R.id.btn_save:
 			// Save
 			if (myApp.cropped_bitmap == null) {
-				Intent intent=new Intent();  
-	            setResult(RESULT_CANCELED,intent);  
+				Intent intent = new Intent();
+				setResult(RESULT_CANCELED, intent);
 				finish();
 			}
 			try {
@@ -175,14 +190,14 @@ public class PlusActivity extends Activity implements OnClickListener {
 				Log.e("save file ", "failed");
 				e.printStackTrace();
 			}
-			Intent intent=new Intent();  
-            setResult(RESULT_OK,intent);  
+			Intent intent = new Intent();
+			setResult(RESULT_OK, intent);
 			finish();
 			break;
 		case R.id.btn_cancel:
 			myApp.cropped_bitmap.recycle();
-			Intent intent2=new Intent();  
-            setResult(RESULT_CANCELED,intent2);  
+			Intent intent2 = new Intent();
+			setResult(RESULT_CANCELED, intent2);
 			finish();
 			break;
 		default:
@@ -190,4 +205,9 @@ public class PlusActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		myApp.cur_date = null;
+		super.onDestroy();
+	}
 }

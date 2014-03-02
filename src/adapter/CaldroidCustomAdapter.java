@@ -42,9 +42,15 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
 		this.imageLoader = imageloader;
 		hash = dbHelper.getHashByMonthYear(month, year);
 	}
-
+	@Override
+	public void notifyDataSetChanged() {
+		Log.e("notifyDataSetChanged", "called");
+		hash = dbHelper.getHashByMonthYear(month, year);
+		super.notifyDataSetChanged();
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		//Log.e("adapter", "getview at" + position);
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View cellView = convertView;
@@ -158,7 +164,12 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
 			if (dateTime.equals(getToday())) {
 				//cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
 				tv_date.setTextColor(Color.RED);
-				tv_date.setBackgroundResource(R.drawable.red_border);
+				if (hash.get(dateTime.getDay()) != null) {
+					tv_date.setBackgroundResource(R.drawable.red_border_with_gradient);					
+				} else{
+					tv_date.setBackgroundResource(R.drawable.red_border);
+				}
+				
 			} else {
 				cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
 			}

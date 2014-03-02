@@ -71,7 +71,7 @@ containing a value of this type.
         public static final int default_fiv_isRotationReversed=0x7f050002;
     }
     public static final class color {
-        public static final int blue=0x7f07000a;
+        public static final int blue=0x7f07000b;
         public static final int caldroid_black=0x7f070001;
         public static final int caldroid_darker_gray=0x7f070005;
         public static final int caldroid_gray=0x7f070004;
@@ -88,19 +88,20 @@ containing a value of this type.
          */
         public static final int caldroid_sky_blue=0x7f070008;
         public static final int caldroid_transparent=0x7f070002;
+        public static final int caldroid_violet=0x7f070009;
         public static final int caldroid_white=0x7f070000;
-        public static final int cell_blue=0x7f070010;
+        public static final int cell_blue=0x7f070011;
         /**  http://stackoverflow.com/questions/11285961/how-to-make-a-background-transparent-20-in-android
          */
-        public static final int cell_gray=0x7f07000d;
-        public static final int cell_gray_dark=0x7f07000e;
-        public static final int cell_green=0x7f07000f;
-        public static final int cell_orange=0x7f070012;
-        public static final int cell_violet=0x7f070011;
-        public static final int green=0x7f070009;
-        public static final int text_bg_opacity=0x7f07000c;
-        public static final int title_bar_bg=0x7f070013;
-        public static final int white=0x7f07000b;
+        public static final int cell_gray=0x7f07000e;
+        public static final int cell_gray_dark=0x7f07000f;
+        public static final int cell_green=0x7f070010;
+        public static final int cell_orange=0x7f070013;
+        public static final int cell_violet=0x7f070012;
+        public static final int green=0x7f07000a;
+        public static final int text_bg_opacity=0x7f07000d;
+        public static final int title_bar_bg=0x7f070014;
+        public static final int white=0x7f07000c;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -137,38 +138,40 @@ containing a value of this type.
         public static final int plus=0x7f02000f;
         public static final int red_border=0x7f020010;
         public static final int red_border_gray_bg=0x7f020011;
-        public static final int right_arrow=0x7f020012;
-        public static final int store=0x7f020013;
+        public static final int red_border_with_gradient=0x7f020012;
+        public static final int right_arrow=0x7f020013;
+        public static final int store=0x7f020014;
     }
     public static final class id {
-        public static final int action_add=0x7f04001b;
-        public static final int action_cancel=0x7f04001e;
-        public static final int action_save=0x7f04001d;
-        public static final int action_today=0x7f04001c;
-        public static final int btn_cancel=0x7f040009;
-        public static final int btn_save=0x7f04000a;
-        public static final int calendar=0x7f040004;
-        public static final int calendar_gridview=0x7f040017;
-        public static final int calendar_left_arrow=0x7f04000e;
-        public static final int calendar_month_year_textview=0x7f04000f;
-        public static final int calendar_right_arrow=0x7f040010;
-        public static final int calendar_title_view=0x7f04000d;
-        public static final int calendar_tv=0x7f040016;
-        public static final int custom_cell=0x7f040013;
-        public static final int fake_view=0x7f040019;
-        public static final int gridview=0x7f040018;
-        public static final int iv_header=0x7f04001a;
-        public static final int iv_image=0x7f040005;
-        public static final int iv_thumbnail=0x7f040014;
-        public static final int months_infinite_pager=0x7f040012;
+        public static final int action_add=0x7f04001c;
+        public static final int action_cancel=0x7f04001f;
+        public static final int action_save=0x7f04001e;
+        public static final int action_today=0x7f04001d;
+        public static final int btn_cancel=0x7f04000a;
+        public static final int btn_save=0x7f04000b;
+        public static final int calendar=0x7f040005;
+        public static final int calendar_gridview=0x7f040018;
+        public static final int calendar_left_arrow=0x7f04000f;
+        public static final int calendar_month_year_textview=0x7f040010;
+        public static final int calendar_right_arrow=0x7f040011;
+        public static final int calendar_title_view=0x7f04000e;
+        public static final int calendar_tv=0x7f040017;
+        public static final int custom_cell=0x7f040014;
+        public static final int fake_view=0x7f04001a;
+        public static final int gridview=0x7f040019;
+        public static final int iv_header=0x7f04001b;
+        public static final int iv_image=0x7f040006;
+        public static final int iv_thumbnail=0x7f040015;
+        public static final int ivfolder=0x7f040004;
+        public static final int months_infinite_pager=0x7f040013;
         public static final int none=0x7f040000;
-        public static final int pager=0x7f04000b;
-        public static final int pager_title_strip=0x7f04000c;
-        public static final int tv_date=0x7f040015;
-        public static final int tv_date_time=0x7f040008;
-        public static final int tv_location=0x7f040007;
-        public static final int tv_title=0x7f040006;
-        public static final int weekday_gridview=0x7f040011;
+        public static final int pager=0x7f04000c;
+        public static final int pager_title_strip=0x7f04000d;
+        public static final int tv_date=0x7f040016;
+        public static final int tv_date_time=0x7f040009;
+        public static final int tv_location=0x7f040008;
+        public static final int tv_title=0x7f040007;
+        public static final int weekday_gridview=0x7f040012;
         public static final int x=0x7f040001;
         public static final int y=0x7f040002;
         public static final int z=0x7f040003;
@@ -180,16 +183,17 @@ containing a value of this type.
         public static final int default_fiv_rotations=0x7f060001;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int activity_plus=0x7f030001;
-        public static final int activity_timeline=0x7f030002;
-        public static final int calendar_view=0x7f030003;
-        public static final int custom_cell=0x7f030004;
-        public static final int date_cell=0x7f030005;
-        public static final int date_grid_fragment=0x7f030006;
-        public static final int fragment_month=0x7f030007;
-        public static final int item_grid=0x7f030008;
-        public static final int item_header=0x7f030009;
+        public static final int action_plus=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int activity_plus=0x7f030002;
+        public static final int activity_timeline=0x7f030003;
+        public static final int calendar_view=0x7f030004;
+        public static final int custom_cell=0x7f030005;
+        public static final int date_cell=0x7f030006;
+        public static final int date_grid_fragment=0x7f030007;
+        public static final int fragment_month=0x7f030008;
+        public static final int item_grid=0x7f030009;
+        public static final int item_header=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
