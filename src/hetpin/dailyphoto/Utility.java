@@ -1,18 +1,20 @@
 package hetpin.dailyphoto;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.TextSwitcher;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Utility {
@@ -45,7 +47,7 @@ public class Utility {
 			file = new File(filePath);
 		}
 		FileOutputStream out = new FileOutputStream(file);
-		//long fileSize = bitmap.getHeight() * bitmap.getRowBytes();
+		// long fileSize = bitmap.getHeight() * bitmap.getRowBytes();
 		int quality = 100;
 		// if (fileSize > 50000) {
 		// quality = (int) (100 * 50000 / fileSize);
@@ -158,5 +160,44 @@ public class Utility {
 			}
 		}
 		return list;
+	}
+
+	// Load bitmap efficiently
+	public static Bitmap getThumbnail(Uri uri, Context context)
+			throws FileNotFoundException, IOException {
+		InputStream input = context.getContentResolver().openInputStream(uri);
+
+		BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+		onlyBoundsOptions.inJustDecodeBounds = true;
+		onlyBoundsOptions.inDither = true;// optional
+		onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
+		BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+		input.close();
+		if ((onlyBoundsOptions.outWidth == -1)
+				|| (onlyBoundsOptions.outHeight == -1))
+			return null;
+
+		int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ? onlyBoundsOptions.outHeight
+				: onlyBoundsOptions.outWidth;
+
+		double ratio = (originalSize > DSetting.size_image_default) ? (originalSize / DSetting.size_image_default)
+				: 1.0;
+
+		BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+		bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
+		bitmapOptions.inDither = true;// optional
+		bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;// optional
+		input = context.getContentResolver().openInputStream(uri);
+		Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+		input.close();
+		return bitmap;
+	}
+
+	private static int getPowerOfTwoForSampleRatio(double ratio) {
+		int k = Integer.highestOneBit((int) Math.floor(ratio));
+		if (k == 0)
+			return 1;
+		else
+			return k;
 	}
 }

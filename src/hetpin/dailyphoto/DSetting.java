@@ -7,5 +7,6 @@ public class DSetting {
 	public static final String date_obj = "date_obj";
 	public static final String date_format_display = "EEEE, MMM dd, yyyy";
 	public static int size_image_default = 500;
+	public static int size_image_min_width = 300;
 
 }

@@ -2,19 +2,17 @@ package hetpin.dailyphoto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -29,21 +27,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
-import data.DBHelper;
-
 public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final int PICK_FROM_CAMERA = 1;
-	private static final int CROP_FROM_CAMERA = 2;
 	private static final int PICK_FROM_FILE = 3;
 	private static final int PLUS_ACTIVITY = 4;
 
 	private MyApp myApp;
-	private DBHelper dbHelper;
+	// private DBHelper dbHelper;
 
 	private CaldroidFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
@@ -77,7 +71,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		myApp = (MyApp) getApplication();
-		dbHelper = new DBHelper(getApplicationContext());
+		// dbHelper = new DBHelper(getApplicationContext());
 		resources = this.getResources();
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 		caldroidFragment = new CaldroidSampleCustomFragment();
@@ -97,15 +91,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
 			args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
 			args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
-
-			// Uncomment this to customize startDayOfWeek
 			args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
 					CaldroidFragment.SUNDAY); // Sunday
 			caldroidFragment.setArguments(args);
 		}
-
 		setCustomResourceForDates();
-
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		t.replace(R.id.calendar, caldroidFragment);
@@ -116,8 +106,9 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(getApplicationContext(),
+				// formatter.format(date),
+				// Toast.LENGTH_SHORT).show();
 				// Start timeline activity
 				myApp.cur_date = date;
 				Intent intent = new Intent(MainActivity.this,
@@ -128,15 +119,15 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void onChangeMonth(int month, int year) {
 				String text = "month: " + month + " year: " + year;
-				Toast.makeText(getApplicationContext(), text,
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(getApplicationContext(), text,
+				// Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onLongClickDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(),
-						"Long click " + formatter.format(date),
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(getApplicationContext(),
+				// "Long click " + formatter.format(date),
+				// Toast.LENGTH_SHORT).show();
 				myApp.cur_date = date;
 				add_photo();
 			}
@@ -144,14 +135,13 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void onCaldroidViewCreated() {
 				if (caldroidFragment.getLeftArrowButton() != null) {
-					Toast.makeText(getApplicationContext(),
-							"Caldroid view is created", Toast.LENGTH_SHORT)
-							.show();
+					// Toast.makeText(getApplicationContext(),
+					// "Caldroid view is created", Toast.LENGTH_SHORT)
+					// .show();
 				}
 			}
 
 		};
-
 		// Setup Caldroid
 		caldroidFragment.setCaldroidListener(listener);
 	}
@@ -193,14 +183,24 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		case R.id.action_today:
 			caldroidFragment.moveToDate(today);
 			// Start timeline activity
-//			Intent intent = new Intent(MainActivity.this,
-//					TimelineActivity.class);
-//			startActivity(intent);
+			// Intent intent = new Intent(MainActivity.this,
+			// TimelineActivity.class);
+			// startActivity(intent);
 
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private File createTemporaryFile(String part, String ext) throws Exception {
+		File tempDir = Environment.getExternalStorageDirectory();
+		tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
+		// added missing ")"
+		if (!tempDir.exists()) {
+			tempDir.mkdir();
+		}
+		return File.createTempFile(part, ext, tempDir);
 	}
 
 	private void add_photo() {
@@ -217,19 +217,19 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				switch (item) {
 				case 0:
 					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					 file_temp = new File(Environment
-					 .getExternalStorageDirectory(), "tmp_file_"
-					 + String.valueOf(System.currentTimeMillis())
-					 + ".jpg");
-					 mImageCaptureUri = Uri.fromFile(file_temp);
-					 intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
-					 mImageCaptureUri);
-					 intent.putExtra("return-data", true);
-					// startActivityForResult(intent, PICK_FROM_CAMERA);
-					// } catch (ActivityNotFoundException e) {
-					// e.printStackTrace();
-					// }
-					startActivityForResult(intent, PICK_FROM_CAMERA);
+					file_temp = new File(Environment
+							.getExternalStorageDirectory(), "tmp_dailyphoto"
+							+ String.valueOf(System.currentTimeMillis())
+							+ ".jpg");
+					mImageCaptureUri = Uri.fromFile(file_temp);
+					intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+							mImageCaptureUri);
+					try {
+						intent.putExtra("return-data", true);
+						startActivityForResult(intent, PICK_FROM_CAMERA);
+					} catch (ActivityNotFoundException e) {
+						e.printStackTrace();
+					}
 					break;
 				case 1:
 					Intent intent2 = new Intent();
@@ -250,29 +250,40 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode != RESULT_OK || data == null)
+		if (resultCode != RESULT_OK ) {
+			Log.e("exit", "resultCode != RESULT_OK ");
 			return;
+		}
+		Log.e("onActivityResult", "0");
 		Intent intent = new Intent(MainActivity.this, PlusActivity.class);
+		Log.e("onActivityResult", "1");
 		switch (requestCode) {
 		case PICK_FROM_CAMERA:
-			Log.e("PICK_FROM_CAMERA", "0");
-			Bundle extra = data.getExtras();
-			Log.e("PICK_FROM_CAMERA", "1");
-			myApp.cropped_bitmap = (Bitmap) extra.get("data");
-			Log.e("PICK_FROM_CAMERA", "2");
-			Log.e("camera", "w = " + myApp.cropped_bitmap.getHeight() + " w= "+myApp.cropped_bitmap.getWidth());
-//			if (file_temp != null) {
-//				file_temp.delete();
-//			}
-			startActivityForResult(intent, PLUS_ACTIVITY);
+			if (mImageCaptureUri == null) {
+				return;
+			}
+			try {
+				Bitmap bitmap = Utility.getThumbnail(mImageCaptureUri, getApplicationContext());
+				Log.e("PICK_FROM_CAMERA", "photo" + "w = " + bitmap.getWidth()
+						+ " h = " + bitmap.getHeight());
+				myApp.cropped_bitmap = bitmap;
+				if (file_temp != null) {
+					file_temp.delete();
+				}
+				startActivityForResult(intent, PLUS_ACTIVITY);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			break;
 		case PICK_FROM_FILE:
 			Uri selectedImage = data.getData();
-            try {
-                myApp.cropped_bitmap = decodeUri(selectedImage);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+			try {
+				myApp.cropped_bitmap = decodeUri(selectedImage);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			startActivityForResult(intent, PLUS_ACTIVITY);
 			break;
 		case PLUS_ACTIVITY:
@@ -282,28 +293,49 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			break;
 		}
 	}
+
 	private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
-        BitmapFactory.Options o = new BitmapFactory.Options();
-        o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(
-                getContentResolver().openInputStream(selectedImage), null, o);
-        final int REQUIRED_SIZE = DSetting.size_image_default;
-        int width_tmp = o.outWidth, height_tmp = o.outHeight;
-        int scale = 1;
-        while (true) {
-            if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
-                break;
-            }
-            width_tmp /= 2;
-            height_tmp /= 2;
-            scale *= 2;
-        }
-        Log.e("width = " +width_tmp, "height = " + height_tmp);
-        BitmapFactory.Options o2 = new BitmapFactory.Options();
-        o2.inSampleSize = scale;
-        return BitmapFactory.decodeStream(
-                getContentResolver().openInputStream(selectedImage), null, o2);
-    }
+		BitmapFactory.Options o = new BitmapFactory.Options();
+		o.inJustDecodeBounds = true;
+		BitmapFactory.decodeStream(
+				getContentResolver().openInputStream(selectedImage), null, o);
+		final int REQUIRED_SIZE = DSetting.size_image_default;
+		int width_tmp = o.outWidth, height_tmp = o.outHeight;
+		Log.e("ori image size", "w=" + width_tmp +" h="+ height_tmp);
+		int scale = 1;
+		if (width_tmp <REQUIRED_SIZE || height_tmp < REQUIRED_SIZE) {
+			//w|h < default
+			//Up scale
+			while (true) {
+				if (width_tmp > REQUIRED_SIZE && height_tmp > REQUIRED_SIZE) {
+					break;
+				}
+				width_tmp = width_tmp * 2;
+				height_tmp = height_tmp * 2;
+				scale = scale / 2;
+			}			
+		} else{
+			if (width_tmp/2>REQUIRED_SIZE && height_tmp / 2 > REQUIRED_SIZE) {
+				//Both w and h >2*default
+				//Down scale
+				while (true) {
+					if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
+						break;
+					}
+					width_tmp /= 2;
+					height_tmp /= 2;
+					scale *= 2;
+				}
+			}
+		}
+
+		Log.e("Scaled image size", "w=" + width_tmp +" h="+ height_tmp);
+		BitmapFactory.Options o2 = new BitmapFactory.Options();
+		o2.inSampleSize = scale;
+		return BitmapFactory.decodeStream(
+				getContentResolver().openInputStream(selectedImage), null, o2);
+	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
