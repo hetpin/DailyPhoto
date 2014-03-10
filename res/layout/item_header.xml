@@ -6,7 +6,7 @@
     <ImageView
         android:id="@+id/iv_header"
         android:layout_width="fill_parent"
-        android:layout_height="180dip"
+        android:layout_height="150dip"
         android:scaleType="centerCrop"
         android:src="@color/caldroid_gray" />
 
@@ -21,13 +21,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/fake_view"
-        android:background="@drawable/gradient_blur_bg"
+        android:background="@drawable/blur_bg"
         android:gravity="center"
         android:lines="1"
         android:padding="10dip"
-        android:text="The month time line title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_cell"
+        android:text="Wednesday, Mar 05, 2014"
+        android:textColor="@color/caldroid_lighter_gray"
+        android:textSize="@dimen/font_header"
         android:textStyle="bold" />
 
 </RelativeLayout>

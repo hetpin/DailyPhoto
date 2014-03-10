@@ -4,5 +4,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="font_cell">20dip</dimen>
-
+    <dimen name="font_header">25dip</dimen>
+    
 </resources>

@@ -96,11 +96,14 @@ containing a value of this type.
         public static final int cell_gray=0x7f07000e;
         public static final int cell_gray_dark=0x7f07000f;
         public static final int cell_green=0x7f070010;
-        public static final int cell_orange=0x7f070013;
-        public static final int cell_violet=0x7f070012;
+        public static final int cell_opacity_dark=0x7f070013;
+        public static final int cell_opacity_light=0x7f070014;
+        public static final int cell_orange=0x7f070016;
+        public static final int cell_red=0x7f070012;
+        public static final int cell_violet=0x7f070015;
         public static final int green=0x7f07000a;
         public static final int text_bg_opacity=0x7f07000d;
-        public static final int title_bar_bg=0x7f070014;
+        public static final int title_bar_bg=0x7f070017;
         public static final int white=0x7f07000c;
     }
     public static final class dimen {
@@ -118,49 +121,59 @@ containing a value of this type.
     
          */
         public static final int font_cell=0x7f0a0002;
+        public static final int font_header=0x7f0a0003;
     }
     public static final class drawable {
-        public static final int calendar_next_arrow=0x7f020000;
-        public static final int calendar_prev_arrow=0x7f020001;
-        public static final int cell_bg=0x7f020002;
-        public static final int chipu=0x7f020003;
-        public static final int disable_cell=0x7f020004;
-        public static final int gradient_blur_bg=0x7f020005;
-        public static final int ic_launcher=0x7f020006;
-        public static final int icon1=0x7f020007;
-        public static final int left_arrow=0x7f020008;
-        public static final int midu1=0x7f020009;
-        public static final int midu2=0x7f02000a;
-        public static final int midu3=0x7f02000b;
-        public static final int nt1=0x7f02000c;
-        public static final int nt2=0x7f02000d;
-        public static final int omnom=0x7f02000e;
-        public static final int plus=0x7f02000f;
-        public static final int red_border=0x7f020010;
-        public static final int red_border_gray_bg=0x7f020011;
-        public static final int red_border_with_gradient=0x7f020012;
-        public static final int right_arrow=0x7f020013;
-        public static final int store=0x7f020014;
+        public static final int blur_bg=0x7f020000;
+        public static final int calendar_next_arrow=0x7f020001;
+        public static final int calendar_prev_arrow=0x7f020002;
+        public static final int cell_bg=0x7f020003;
+        public static final int chipu=0x7f020004;
+        public static final int disable_cell=0x7f020005;
+        public static final int gradient_blur_bg=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int icon1=0x7f020008;
+        public static final int left_arrow=0x7f020009;
+        public static final int midu1=0x7f02000a;
+        public static final int midu2=0x7f02000b;
+        public static final int midu3=0x7f02000c;
+        public static final int nt1=0x7f02000d;
+        public static final int nt2=0x7f02000e;
+        public static final int omnom=0x7f02000f;
+        public static final int plus=0x7f020010;
+        public static final int red_border=0x7f020011;
+        public static final int red_border_gray_bg=0x7f020012;
+        public static final int red_border_with_gradient=0x7f020013;
+        public static final int right_arrow=0x7f020014;
+        public static final int round_blue=0x7f020015;
+        public static final int round_red=0x7f020016;
+        public static final int selector_round_cell_opacity_light_dark=0x7f020017;
+        public static final int selector_round_cell_red_blue=0x7f020018;
+        public static final int selector_round_cell_transparent_blue=0x7f020019;
+        public static final int selector_text_cell=0x7f02001a;
+        public static final int store=0x7f02001b;
     }
     public static final class id {
-        public static final int action_add=0x7f04001c;
-        public static final int action_cancel=0x7f04001f;
-        public static final int action_save=0x7f04001e;
-        public static final int action_today=0x7f04001d;
+        public static final int action_add=0x7f04001e;
+        public static final int action_cancel=0x7f040021;
+        public static final int action_save=0x7f040020;
+        public static final int action_today=0x7f04001f;
         public static final int btn_cancel=0x7f04000a;
         public static final int btn_save=0x7f04000b;
         public static final int calendar=0x7f040005;
-        public static final int calendar_gridview=0x7f040018;
+        public static final int calendar_gridview=0x7f04001a;
         public static final int calendar_left_arrow=0x7f04000f;
         public static final int calendar_month_year_textview=0x7f040010;
         public static final int calendar_right_arrow=0x7f040011;
         public static final int calendar_title_view=0x7f04000e;
-        public static final int calendar_tv=0x7f040017;
+        public static final int calendar_tv=0x7f040019;
         public static final int custom_cell=0x7f040014;
-        public static final int fake_view=0x7f04001a;
-        public static final int gridview=0x7f040019;
-        public static final int iv_header=0x7f04001b;
+        public static final int fake_view=0x7f04001c;
+        public static final int gridview=0x7f04001b;
+        public static final int iv_header=0x7f04001d;
         public static final int iv_image=0x7f040006;
+        public static final int iv_round=0x7f040018;
+        public static final int iv_thumb=0x7f040017;
         public static final int iv_thumbnail=0x7f040015;
         public static final int ivfolder=0x7f040004;
         public static final int months_infinite_pager=0x7f040013;
@@ -189,11 +202,12 @@ containing a value of this type.
         public static final int activity_timeline=0x7f030003;
         public static final int calendar_view=0x7f030004;
         public static final int custom_cell=0x7f030005;
-        public static final int date_cell=0x7f030006;
-        public static final int date_grid_fragment=0x7f030007;
-        public static final int fragment_month=0x7f030008;
-        public static final int item_grid=0x7f030009;
-        public static final int item_header=0x7f03000a;
+        public static final int custom_round_cell=0x7f030006;
+        public static final int date_cell=0x7f030007;
+        public static final int date_grid_fragment=0x7f030008;
+        public static final int fragment_month=0x7f030009;
+        public static final int item_grid=0x7f03000a;
+        public static final int item_header=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;

@@ -25,8 +25,6 @@ public class MonthFragment extends Fragment {
 	private ImageView iv_header;
 	private TextView tv_title;
 	public static final String ARG_OBJECT = "object";
-	private SimpleDateFormat dfDateDB = new SimpleDateFormat(
-			DSetting.date_format_db);
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,20 +45,23 @@ public class MonthFragment extends Fragment {
 		tv_title = (TextView) header.findViewById(R.id.tv_title);
 		iv_header = (ImageView) header.findViewById(R.id.iv_header);
 		gridview.addHeaderView(header);
-		adapter = new MonthAdapter(getActivity(), myApp.getImageLoader(), list_photos);
-		gridview.setAdapter(adapter);
 		int size = list_photos.size();
 		if (size > 0) {
 			//find and set cover photo
 			for (int i = size -1; i >=0; i--) {
 				if (list_photos.get(i).is_cover) {
 					myApp.getImageLoader().displayImage(list_photos.get(i).getImageLoaderPath(), iv_header);
-					tv_title.setText(list_photos.get(i).title);
+					tv_title.setText(list_photos.get(i).getDisplayDate());
+					if (size %2 == 1) {
+						//Odd size
+						list_photos.remove(i);
+					}
 					break;
 				}
 			}
 		}
-				
+		adapter = new MonthAdapter(getActivity(), myApp.getImageLoader(), list_photos);
+		gridview.setAdapter(adapter);				
 		return rootView;
 	}
 }

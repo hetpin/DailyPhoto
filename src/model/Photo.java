@@ -1,5 +1,9 @@
 package model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import hetpin.dailyphoto.DSetting;
 import android.database.Cursor;
 import android.util.Log;
@@ -12,7 +16,10 @@ public class Photo {
 	public String location;
 	public String time_mili_second;// Unique for insertion
 	public String date;
-
+	SimpleDateFormat formatter_db = new SimpleDateFormat(
+			DSetting.date_format_db);
+	private SimpleDateFormat dfDateDisplay = new SimpleDateFormat(
+			DSetting.date_format_display);
 	// Marked as cover photo
 	public boolean is_cover = false;
 	// Use to add to hash map
@@ -43,5 +50,16 @@ public class Photo {
 	public String toString() {
 		return this.id + " " + this.date + " " + this.path + " "
 				+ this.time_mili_second;
+	}
+
+	public String getDisplayDate() {
+		try {
+			
+			Date date = formatter_db.parse(this.date);
+			return dfDateDisplay.format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return this.date;
 	}
 }

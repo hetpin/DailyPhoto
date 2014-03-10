@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/custom_cell"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dip"
+    android:gravity="center"
+    android:paddingTop="10dip" >
+    <model.RoundedImageView
+        android:id="@+id/iv_thumb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chipu" />
+
+    <model.RoundedImageButton
+        android:id="@+id/iv_round"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_round_cell_transparent_blue"
+        android:text="25"
+        android:textColor="@drawable/selector_text_cell"
+        android:textSize="30sp" />
+
+    <com.roomorama.caldroid.SquareTextView
+        android:id="@+id/tv_date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="24"
+        android:textColor="@color/caldroid_darker_gray"
+        android:textSize="@dimen/font_cell" />
+
+</RelativeLayout>

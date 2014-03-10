@@ -46,10 +46,18 @@ public class MyApp extends Application {
 	}
 
 	public String getCurDateFormatDb() {
+		if (formatter_db == null) {
+			formatter_db = new SimpleDateFormat(
+					DSetting.date_format_db);
+		}
 		return formatter_db.format(cur_date);
 	}
 
 	public String getCurDateFormatDisplay() {
+		if (formatter_display == null) {
+			formatter_display = new SimpleDateFormat(
+					DSetting.date_format_display);
+		}
 		return formatter_display.format(cur_date);
 	}
 

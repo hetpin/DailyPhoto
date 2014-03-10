@@ -7,12 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import model.CellListener;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -39,31 +40,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private MyApp myApp;
 	// private DBHelper dbHelper;
 
-	private CaldroidFragment caldroidFragment;
+	private CaldroidSampleCustomFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
-	private Resources resources;
+	// private Resources resources;
 	private Uri mImageCaptureUri;
 	private File file_temp = null;
-
-	private void setCustomResourceForDates() {
-		Calendar cal = Calendar.getInstance();
-		// Min date is last 7 days
-		cal.add(Calendar.DATE, -18);
-		Date blueDate = cal.getTime();
-		// Max date is next 7 days
-		cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 16);
-		Date greenDate = cal.getTime();
-
-		if (caldroidFragment != null) {
-			caldroidFragment.setBackgroundResourceForDate(R.color.blue,
-					blueDate);
-			caldroidFragment.setBackgroundResourceForDate(R.color.green,
-					greenDate);
-			caldroidFragment.setTextColorForDate(R.color.white, blueDate);
-			caldroidFragment.setTextColorForDate(R.color.white, greenDate);
-		}
-	}
 
 	@SuppressLint("SimpleDateFormat")
 	@Override
@@ -72,7 +53,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		setContentView(R.layout.activity_main);
 		myApp = (MyApp) getApplication();
 		// dbHelper = new DBHelper(getApplicationContext());
-		resources = this.getResources();
+		// resources = this.getResources();
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 		caldroidFragment = new CaldroidSampleCustomFragment();
 		// caldroidFragment = new CaldroidFragment();
@@ -95,7 +76,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					CaldroidFragment.SUNDAY); // Sunday
 			caldroidFragment.setArguments(args);
 		}
-		setCustomResourceForDates();
+		// setCustomResourceForDates();
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		t.replace(R.id.calendar, caldroidFragment);
@@ -106,9 +87,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				// Toast.makeText(getApplicationContext(),
-				// formatter.format(date),
-				// Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), formatter.format(date),
+						Toast.LENGTH_SHORT).show();
 				// Start timeline activity
 				myApp.cur_date = date;
 				Intent intent = new Intent(MainActivity.this,
@@ -118,16 +98,16 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 			@Override
 			public void onChangeMonth(int month, int year) {
-				String text = "month: " + month + " year: " + year;
+				// String text = "month: " + month + " year: " + year;
 				// Toast.makeText(getApplicationContext(), text,
 				// Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
 			public void onLongClickDate(Date date, View view) {
-				// Toast.makeText(getApplicationContext(),
-				// "Long click " + formatter.format(date),
-				// Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(),
+						"Long click " + formatter.format(date),
+						Toast.LENGTH_SHORT).show();
 				myApp.cur_date = date;
 				add_photo();
 			}
@@ -144,6 +124,29 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		};
 		// Setup Caldroid
 		caldroidFragment.setCaldroidListener(listener);
+		CellListener cell_listener = new CellListener() {
+			@Override
+			public void onSelectDate(Date date) {
+				// Toast.makeText(getApplicationContext(),
+				// formatter.format(date),
+				// Toast.LENGTH_SHORT).show();
+				// Start timeline activity
+				myApp.cur_date = date;
+				Intent intent = new Intent(MainActivity.this,
+						TimelineActivity.class);
+				startActivity(intent);
+			}
+
+			@Override
+			public void onLongSelectDate(Date date) {
+				// Toast.makeText(getApplicationContext(),
+				// "Long click " + formatter.format(date),
+				// Toast.LENGTH_SHORT).show();
+				myApp.cur_date = date;
+				add_photo();
+			}
+		};
+		caldroidFragment.setCellListener(cell_listener);
 	}
 
 	/**
@@ -151,7 +154,6 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 
 		if (caldroidFragment != null) {
@@ -182,25 +184,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			return true;
 		case R.id.action_today:
 			caldroidFragment.moveToDate(today);
-			// Start timeline activity
-			// Intent intent = new Intent(MainActivity.this,
-			// TimelineActivity.class);
-			// startActivity(intent);
-
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private File createTemporaryFile(String part, String ext) throws Exception {
-		File tempDir = Environment.getExternalStorageDirectory();
-		tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
-		// added missing ")"
-		if (!tempDir.exists()) {
-			tempDir.mkdir();
-		}
-		return File.createTempFile(part, ext, tempDir);
 	}
 
 	private void add_photo() {
@@ -250,7 +237,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (resultCode != RESULT_OK ) {
+		if (resultCode != RESULT_OK) {
 			Log.e("exit", "resultCode != RESULT_OK ");
 			return;
 		}
@@ -263,7 +250,8 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				return;
 			}
 			try {
-				Bitmap bitmap = Utility.getThumbnail(mImageCaptureUri, getApplicationContext());
+				Bitmap bitmap = Utility.getThumbnail(mImageCaptureUri,
+						getApplicationContext());
 				Log.e("PICK_FROM_CAMERA", "photo" + "w = " + bitmap.getWidth()
 						+ " h = " + bitmap.getHeight());
 				myApp.cropped_bitmap = bitmap;
@@ -301,11 +289,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				getContentResolver().openInputStream(selectedImage), null, o);
 		final int REQUIRED_SIZE = DSetting.size_image_default;
 		int width_tmp = o.outWidth, height_tmp = o.outHeight;
-		Log.e("ori image size", "w=" + width_tmp +" h="+ height_tmp);
+		Log.e("ori image size", "w=" + width_tmp + " h=" + height_tmp);
 		int scale = 1;
-		if (width_tmp <REQUIRED_SIZE || height_tmp < REQUIRED_SIZE) {
-			//w|h < default
-			//Up scale
+		if (width_tmp < REQUIRED_SIZE || height_tmp < REQUIRED_SIZE) {
+			// w|h < default
+			// Up scale
 			while (true) {
 				if (width_tmp > REQUIRED_SIZE && height_tmp > REQUIRED_SIZE) {
 					break;
@@ -313,13 +301,14 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 				width_tmp = width_tmp * 2;
 				height_tmp = height_tmp * 2;
 				scale = scale / 2;
-			}			
-		} else{
-			if (width_tmp/2>REQUIRED_SIZE && height_tmp / 2 > REQUIRED_SIZE) {
-				//Both w and h >2*default
-				//Down scale
+			}
+		} else {
+			if (width_tmp / 2 > REQUIRED_SIZE && height_tmp / 2 > REQUIRED_SIZE) {
+				// Both w and h >2*default
+				// Down scale
 				while (true) {
-					if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE) {
+					if (width_tmp / 2 < REQUIRED_SIZE
+							|| height_tmp / 2 < REQUIRED_SIZE) {
 						break;
 					}
 					width_tmp /= 2;
@@ -329,7 +318,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			}
 		}
 
-		Log.e("Scaled image size", "w=" + width_tmp +" h="+ height_tmp);
+		Log.e("Scaled image size", "w=" + width_tmp + " h=" + height_tmp);
 		BitmapFactory.Options o2 = new BitmapFactory.Options();
 		o2.inSampleSize = scale;
 		return BitmapFactory.decodeStream(

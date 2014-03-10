@@ -21,12 +21,17 @@ public class MonthAdapter extends BaseAdapter {
 	private ImageLoader imageLoader;
 	private ArrayList<Photo> list;
 	private Context mContext;
+	private DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	public MonthAdapter(Context mContext,
 			ImageLoader imageLoader, ArrayList<Photo> list) {
 		this.mContext = mContext;
 		this.list = list;
 		this.imageLoader = imageLoader;
+		options = new DisplayImageOptions.Builder()
+        .cacheInMemory(false)
+        .cacheOnDisc(false)
+        .build();
 	}
 
 	@Override
@@ -69,33 +74,7 @@ public class MonthAdapter extends BaseAdapter {
 		}
 		holder.text
 				.setText(list.get(position).title);
-		imageLoader.displayImage(list.get(position).getImageLoaderPath(), holder.iv_image, animateFirstListener);
-//		int index = position % 5;
-//		switch (index) {
-//		case 0:
-//			holder.iv_image.setImageResource(R.drawable.midu1);
-//			break;
-//		case 1:
-//			holder.iv_image.setImageResource(R.drawable.nt1);
-//
-//			break;
-//		case 2:
-//			holder.iv_image.setImageResource(R.drawable.midu2);
-//
-//			break;
-//		case 3:
-//			holder.iv_image.setImageResource(R.drawable.nt2);
-//
-//			break;
-//		case 4:
-//			holder.iv_image.setImageResource(R.drawable.midu3);
-//
-//			break;
-//
-//		default:
-//			break;
-//		}
-
+		imageLoader.displayImage(list.get(position).getImageLoaderPath(), holder.iv_image, options);
 		return convertView;
 	}
 
