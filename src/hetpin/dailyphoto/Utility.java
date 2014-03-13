@@ -9,11 +9,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -200,4 +205,59 @@ public class Utility {
 		else
 			return k;
 	}
+
+	public static ArrayList<String> listFiles(Context context, String dirFrom) {
+		Log.e("loading dir", dirFrom);
+		Resources res = context.getResources(); // if you are in an activity
+		AssetManager am = res.getAssets();
+		ArrayList<String> list = new ArrayList<String>();
+		String fileList[];
+		try {
+			fileList = am.list(dirFrom);
+			if (fileList != null) {
+				for (int i = 0; i < fileList.length; i++) {
+					//Log.e("loadingfile " + dirFrom, fileList[i]);
+					list.add(dirFrom + "/"+ fileList[i]);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public static void insert_value_to_key_string(Context context, String key,
+			String value) {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		Editor edit = preferences.edit();
+		edit.putString(key, value);
+		edit.commit();
+		Log.e("insert " + value, "to " + key);
+	}
+
+	public static String get_value_by_key_string(Context context, String key) {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		Log.e("get " + key, "value = " + preferences.getString(key, ""));
+		return preferences.getString(key, "");
+	}
+
+	public static void insert_value_to_key_int(Context context, String key,
+			int value) {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		Editor edit = preferences.edit();
+		edit.putInt(key, value);
+		edit.commit();
+		Log.e("insert " + value, "to " + key);
+	}
+
+	public static int get_value_by_key_int(Context context, String key) {
+		SharedPreferences preferences = PreferenceManager
+				.getDefaultSharedPreferences(context);
+		Log.e("get " + key, "value = " + preferences.getInt(key, 0));
+		return preferences.getInt(key, 0);
+	}
+
+
 }

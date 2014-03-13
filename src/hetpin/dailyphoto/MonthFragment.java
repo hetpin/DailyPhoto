@@ -60,7 +60,7 @@ public class MonthFragment extends Fragment {
 				}
 			}
 		}
-		adapter = new MonthAdapter(getActivity(), myApp.getImageLoader(), list_photos);
+		adapter = new MonthAdapter(getActivity(), myApp.getImageLoader(), list_photos, myApp);
 		gridview.setAdapter(adapter);				
 		return rootView;
 	}

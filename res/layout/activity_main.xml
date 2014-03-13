@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/caldroid_white"
     tools:context=".MainActivity" >
 
     <LinearLayout
@@ -10,4 +11,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:layout_width="45dip"
+            android:layout_height="45dip"
+            android:scaleType="centerInside"
+            android:src="@drawable/btn_setting"
+            android:id="@+id/btn_setting"
+            android:onClick="onClick"
+            android:background="@drawable/selector_cell_transparent_blueopacity"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
 </RelativeLayout>

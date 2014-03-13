@@ -35,7 +35,7 @@ public class Photo {
 			this.time_mili_second = c.getString(c
 					.getColumnIndex(DB.KEY_PHOTO_TIME_MILIS));
 			this.date = c.getString(c.getColumnIndex(DB.KEY_PHOTO_DATE));
-			this.dayOfMonth = Integer.parseInt(this.date.substring(0, 2));
+			this.dayOfMonth = Integer.parseInt(this.date.substring(this.date.length()-2, this.date.length()));
 			Log.e("added", this.toString());
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -44,7 +44,11 @@ public class Photo {
 	}
 
 	public String getImageLoaderPath() {
-		return DSetting.file_path_prefix + this.path;
+		if (this.path.contains(DSetting.prefix_asset)) {
+			return this.path;
+		} else{
+			return DSetting.file_path_prefix + this.path;			
+		}
 	}
 
 	public String toString() {
@@ -61,5 +65,13 @@ public class Photo {
 			e.printStackTrace();
 		}
 		return this.date;
+	}
+
+	public boolean isFeeling() {
+		if (this.path.contains(DSetting.prefix_asset)) {
+			return true;
+		} else{
+			return false;
+		}
 	}
 }

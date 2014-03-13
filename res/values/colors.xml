@@ -9,6 +9,7 @@
     <color name="cell_blue">#33B5E5</color>
     <color name="cell_red">#FF4444</color>
     <color name="cell_opacity_dark">#C0333333</color>
+    <color name="cell_opacity_blue">#C033B5E5</color>
     <color name="cell_opacity_light">#66333333</color>
     <color name="cell_violet">#AE7DA4</color>
     <color name="cell_orange">#FFC881</color>

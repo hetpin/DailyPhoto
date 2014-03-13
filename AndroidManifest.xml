@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="hetpin.dailyphoto"
-    android:versionCode="2"
-    android:versionName="1.0.1" xmlns:tools="http://schemas.android.com/tools">
+    android:versionCode="3"
+    android:versionName="1.0.2" >
 
     <!-- External storage for caching. -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -30,10 +31,20 @@
         </activity>
         <activity
             android:name="hetpin.dailyphoto.PlusActivity"
-            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" tools:targetApi="11">
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            tools:targetApi="11" >
+        </activity>
+        <activity
+            android:name="hetpin.dailyphoto.FeelingActivity"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar"
+            tools:targetApi="11" >
         </activity>
         <activity android:name="hetpin.dailyphoto.TimelineActivity" >
         </activity>
-    </application>
+        <activity android:name="hetpin.dailyphoto.SliderActivity" >
+        </activity>
+        <activity android:name="hetpin.dailyphoto.SettingActivity" >
+        </activity>
+        </application>
 
 </manifest>

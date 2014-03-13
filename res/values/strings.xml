@@ -6,5 +6,7 @@
     <string name="action_today">Today</string>
     <string name="action_add">Add</string>
     <string name="hello_world">Hello world!</string>
+    <string name="about_text">Don\'t ever miss it by not capturing your moment</string>
+    <string name="about_text_design">Designed by hetpin</string>
 
 </resources>

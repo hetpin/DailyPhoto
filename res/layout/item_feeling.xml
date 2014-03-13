@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <model.NormalSquareImageView
+        android:id="@+id/iv_image"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dip"
+        android:scaleType="centerCrop"
+        android:src="@drawable/omnom" />
+
+    <View
+        android:id="@+id/fake_view"
+        android:layout_width="0dip"
+        android:layout_height="0dip"
+        android:layout_below="@+id/iv_image" />
+
+    <model.TextviewAutoscroll
+        android:id="@+id/tv_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fake_view"
+        android:background="@drawable/gradient_blur_bg"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:paddingBottom="5dip"
+        android:paddingLeft="8dip"
+        android:paddingRight="8dip"
+        android:paddingTop="15dip"
+        android:scrollHorizontally="true"
+        android:singleLine="true"
+        android:text="The title image put here, are you understand ???? "
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+    <model.RoundedImageButton
+        android:id="@+id/btn_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_round_cell_transparent_blueopacity" />
+
+</RelativeLayout>

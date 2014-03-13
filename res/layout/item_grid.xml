@@ -29,13 +29,19 @@
         android:focusableInTouchMode="true"
         android:gravity="center"
         android:marqueeRepeatLimit="marquee_forever"
+        android:paddingBottom="5dip"
         android:paddingLeft="8dip"
         android:paddingRight="8dip"
         android:paddingTop="15dip"
-        android:paddingBottom="5dip"
         android:scrollHorizontally="true"
         android:singleLine="true"
         android:text="The title image put here, are you understand ???? "
         android:textColor="@color/white" />
+
+    <model.SquareImageButton
+        android:id="@+id/btn_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_cell_transparent_opacity" />
 
 </RelativeLayout>

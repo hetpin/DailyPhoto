@@ -36,6 +36,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	private static final int PICK_FROM_CAMERA = 1;
 	private static final int PICK_FROM_FILE = 3;
 	private static final int PLUS_ACTIVITY = 4;
+	private static final int FEELING_ACTIVITY = 5;
 
 	private MyApp myApp;
 	// private DBHelper dbHelper;
@@ -52,6 +53,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		myApp = (MyApp) getApplication();
+		AppRater.app_launched(this);
 		// dbHelper = new DBHelper(getApplicationContext());
 		// resources = this.getResources();
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
@@ -180,6 +182,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 		Date today = cal.getTime();
 		switch (item.getItemId()) {
 		case R.id.action_add:
+			myApp.cur_date = today;
 			add_photo();
 			return true;
 		case R.id.action_today:
@@ -192,7 +195,7 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 
 	private void add_photo() {
 		final String[] items = new String[] { "Select from Camera",
-				"Select from gallery" };
+				"Select from gallery", "Sticker" };
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.select_dialog_item, items);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -224,6 +227,40 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 					intent2.setAction(Intent.ACTION_GET_CONTENT);
 					startActivityForResult(Intent.createChooser(intent2,
 							"Complete action using"), PICK_FROM_FILE);
+					break;
+				case 2:
+					// Add feeling
+					Intent intent3 = new Intent(MainActivity.this,
+							FeelingActivity.class);
+					startActivityForResult(intent3, FEELING_ACTIVITY);
+					break;
+				default:
+					break;
+				}
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+
+	}
+	private void show_setting_dialog() {
+		final String[] items = new String[] { "Create collage",
+				"Setting","PRO version without Ad" };
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.select_dialog_item, items);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) { 
+				switch (item) {
+				case 0:
+					break;
+				case 1:
+					Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+					startActivity(intent);
+					break;
+				case 2:
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri
+							.parse("market://details?id=" + "hetpin.dailyphoto")));
 					break;
 				default:
 					break;
@@ -279,6 +316,11 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 			Log.e("onActivityResult", "f5 view");
 			caldroidFragment.refreshView();
 			break;
+		case FEELING_ACTIVITY:
+			// Refresh view
+			Log.e("onActivityResult", "f5 view");
+			caldroidFragment.refreshView();
+			break;
 		}
 	}
 
@@ -328,7 +370,10 @@ public class MainActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-
+		case R.id.btn_setting:
+			//Show setting dialog
+			show_setting_dialog();
+			break;
 		default:
 			break;
 		}

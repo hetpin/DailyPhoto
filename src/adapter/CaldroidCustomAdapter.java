@@ -74,10 +74,18 @@ public class CaldroidCustomAdapter extends CaldroidGridAdapter {
 		} else{
 			//add last image to cell
 			Log.e("load cell", "" + hash.get(dateTime.getDay()));
+			if (hash.get(dateTime.getDay()).contains(DSetting.prefix_asset)) {
+//				tv_date.setBackgroundColor(resources
+//						.getColor(R.color.text_bg_opacity));
+				Log.e("abc", "selector_round_cell_transparent_blue");
+				tv_date.setBackgroundResource(R.drawable.selector_round_cell_transparent_blue);
+			}else{
+				Log.e("abc", "gradient_blur_bg");
+//				tv_date.setBackgroundColor(resources
+//						.getColor(R.color.text_bg_opacity));
+				tv_date.setBackgroundResource(R.drawable.gradient_blur_bg);
+			}
 			imageLoader.displayImage(hash.get(dateTime.getDay()), iv_thumbnail);
-//			tv_date.setBackgroundColor(resources
-//					.getColor(R.color.text_bg_opacity));
-			tv_date.setBackgroundResource(R.drawable.gradient_blur_bg);
 		}
 //		iv_thumbnail.setOnFlipListener(new OnFlipListener() {
 //			

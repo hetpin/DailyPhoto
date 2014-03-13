@@ -6,6 +6,7 @@ import data.DB;
 import data.DBHelper;
 import adapter.TimelineAdapter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class TimelineActivity extends FragmentActivity {
 	private ArrayList<String> list_dates;
 	@Override
 	protected void onDestroy() {
-		myApp.cur_date = null;
+		//myApp.cur_date = null;
 		super.onDestroy();
 	}
 	@Override
@@ -71,7 +72,14 @@ public class TimelineActivity extends FragmentActivity {
 			//Log.e("seaching", list_dates.get(i));
 			if (list_dates.get(i).equals(cur_date_str)) {
 				//Log.e(list_dates.get(i), cur_date_str);
-				mViewPager.setCurrentItem(i, true);
+				final int pos = i;
+				new Handler().post(new Runnable() {
+					@Override
+					public void run() {
+					    mViewPager.setCurrentItem(pos); //Where "2" is the position you want to go
+					    }
+					});
+				//mViewPager.setCurrentItem(i, true);
 				break;
 			}
 		}

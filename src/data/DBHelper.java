@@ -2,10 +2,7 @@ package data;
 
 import hetpin.dailyphoto.DSetting;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import model.Photo;
@@ -62,12 +59,12 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 	public HashMap<Integer, String> getHashByMonthYear(int month, int year) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		String date_str = String.format("%02d-%04d", month, year);
+		String date_str = String.format("%04d-%02d", year, month);
 		// Query dailyphoto table
 		String cols = "*";
 		String query = "SELECT " + cols + " FROM " + DB.TABLE_DAILY_PHOTO
-				+ " WHERE " + DB.KEY_PHOTO_DATE + " LIKE '%" + date_str
-				+ "' ORDER BY " + DB.KEY_PHOTO_ID + " ASC";
+				+ " WHERE " + DB.KEY_PHOTO_DATE + " LIKE '" + date_str
+				+ "%' ORDER BY " + DB.KEY_PHOTO_ID + " ASC";
 		Cursor cursor = db.rawQuery(query, null);
 		Log.e("query", query);
 		Log.e("count of photo on " + date_str, "" + cursor.getCount());
@@ -79,7 +76,6 @@ public class DBHelper extends SQLiteOpenHelper {
 			cursor.moveToNext();
 		}
 		return hash;
-
 	}
 
 	public ArrayList<Photo> getPhotoByDate(String date_str) {
@@ -91,15 +87,17 @@ public class DBHelper extends SQLiteOpenHelper {
 				+ "' ORDER BY " + DB.KEY_PHOTO_ID + " ASC";
 		Cursor cursor = db.rawQuery(query, null);
 		Log.e("query", query);
-		Log.e("count of photo on " + date_str, "" + cursor.getCount());
 		ArrayList<Photo> list = new ArrayList<Photo>();
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			Photo item = new Photo(cursor);
-			list.add(item);
+			if (!item.isFeeling()) {
+				list.add(item);				
+			}
 			cursor.moveToNext();
 		}
 		int size = list.size();
+		Log.e("count of photo on " + date_str, "" + size);
 		if (size == 0) {
 			return list;
 		}// Ensure list have at least one image
@@ -136,7 +134,9 @@ public class DBHelper extends SQLiteOpenHelper {
 		// Query dailyphoto table
 		String cols = " DISTINCT " + DB.KEY_PHOTO_DATE;
 		String query = "SELECT " + cols + " FROM " + DB.TABLE_DAILY_PHOTO
-				+ " ORDER  by datetime(" + DB.KEY_PHOTO_DATE + ") ASC";
+				+ " WHERE " + DB.KEY_PHOTO_TITLE + " != '" + DSetting.KEY_MEEP +"'"
+//				+ " ORDER BY " +  "strftime('%d-%m-%Y', 'photo_date')" + " ASC";
+		+ " ORDER  by date(" + DB.KEY_PHOTO_DATE + ") ASC";
 		Cursor cursor = db.rawQuery(query, null);
 		Log.e("query", query);
 		Log.e("count of date with photos ", "" + cursor.getCount());
@@ -181,7 +181,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		// Inserting Row
 		long result_id = db.insert(DB.TABLE_DAILY_PHOTO, null, values);
 		// Update Cover table
-		if (result_id != -1) {
+		if (result_id != -1 && !title.equals(DSetting.KEY_MEEP)) {
 			//insert photo success
 			if (this.getCoverIdByDate(date) >= 0) {
 				// Update current cover by new photo

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/caldroid_black" >
+
+    <model.TouchImageView
+        android:id="@+id/iv_touch"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitCenter" />
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dip" >
+
+        <TextView
+            android:id="@+id/tv_des"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:text="Mot ngay nang dep"
+            android:textColor="@color/caldroid_gray"
+            android:textSize="18dip" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_des"
+            android:lines="1"
+            android:text="20-10-2014"
+            android:textColor="@color/caldroid_gray"
+            android:textSize="13dip"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_above="@+id/tv_location"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/selector_btn_share"
+            android:src="@drawable/ic_action_share_dark" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_date"
+            android:gravity="right"
+            android:lines="1"
+            android:text="Xuan La, Ha Noi"
+            android:textColor="@color/caldroid_gray"
+            android:textSize="18dip"
+            android:textStyle="normal" />
+    </RelativeLayout>
+
+</RelativeLayout>

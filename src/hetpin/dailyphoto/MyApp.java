@@ -2,7 +2,10 @@ package hetpin.dailyphoto;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import model.Photo;
 
 import android.app.Application;
 import android.content.Context;
@@ -22,7 +25,9 @@ public class MyApp extends Application {
 			DSetting.date_format_db);
 	SimpleDateFormat formatter_display = new SimpleDateFormat(
 			DSetting.date_format_display);
-
+	
+	public ArrayList<Photo> slider_list_photos;
+	public int slider_cur_position;
 	public void onCreate() {
 		super.onCreate();
 		initImageLoader(getApplicationContext());
@@ -50,7 +55,13 @@ public class MyApp extends Application {
 			formatter_db = new SimpleDateFormat(
 					DSetting.date_format_db);
 		}
-		return formatter_db.format(cur_date);
+		String result = "";
+		try {
+			result = formatter_db.format(cur_date);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public String getCurDateFormatDisplay() {
@@ -65,6 +76,8 @@ public class MyApp extends Application {
 		cropped_file = null;
 		cropped_bitmap = null;
 		cur_date = null;
+		slider_list_photos = null;
+		slider_cur_position = 0;
 	}
 
 	public ImageLoader getImageLoader() {
